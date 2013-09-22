@@ -1,9 +1,12 @@
-# routetrie
+routetrie
+=========
+
+Efficient URL route lookups for Golang
 
 routetrie is an implementation of a trie data structure that can be used for
-efficient URL route lookups. It supports :param and \*wildcard placeholders.
+efficient URL route lookups.
 
-## Usage
+Named :params and \*wildcard placeholders are supported.
 
 ```go
 package main
@@ -13,16 +16,17 @@ import (
 )
 
 func main() {
+  // Initialize the trie.
   trie := routetrie.NewRouteTrie()
+
+  // Add routes.
   trie.Add("example.com/foo", 1)
   trie.Add("example.com/foo/:bar", 2)
   trie.Add("example.com/foo/:bar/*baz", 3)
 
-  trie.Get("example.com/foo")
-  // => 1, {}
-  trie.Get("example.com/foo/bar")
-  // => 2, {"bar": "bar"}
-  trie.Get("example.com/foo/bar/baz/qux")
-  // => 3, {"bar": "bar", "baz": "baz/qux"}
+  // Find routes.
+  trie.Get("example.com/foo")  // => 1, {}
+  trie.Get("example.com/foo/bar")  // => 2, {"bar": "bar"}
+  trie.Get("example.com/foo/bar/baz/qux")  // => 3, {"bar": "bar", "baz": "baz/qux"}
 }
 ```

@@ -37,9 +37,9 @@ func NewRouteTrie() *RouteTrie {
 	return &t
 }
 
-// Add sets a value value to the trie at a particular route. The route is
-// typically a URL path with or without host, e.g. "example.com/foo" or just
-// "/foo", and can contain :param placeholders and *wildcard placeholders.
+// Add sets a value to the trie at a particular route. The route is typically
+// a URL path, with or without host, e.g. "example.com/foo" or just
+// "/foo". Routes can contain :param placeholders and *wildcard placeholders.
 func (t *RouteTrie) Add(route string, value interface{}) error {
 	route = normalize(route)
 
@@ -62,6 +62,7 @@ func (t *RouteTrie) Add(route string, value interface{}) error {
 				trie: NewRouteTrie(),
 			}
 		} else {
+      // TODO(stevenle): Support different :param names at the same path.
 			if t.paramChild.name != paramChildName {
 				return errors.New("Cannot set two different :param names at the same path")
 			}
